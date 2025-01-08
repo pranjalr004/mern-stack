@@ -1,0 +1,23 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pranjalr004/mern-stack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pranjalr004/mern-stack/issues"
+  },
+  "homepage": "https://github.com/pranjalr004/mern-stack#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
