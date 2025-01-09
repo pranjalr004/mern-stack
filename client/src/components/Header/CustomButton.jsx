@@ -5,6 +5,7 @@ import { useState } from 'react';
 import LoginDialog from '../Login/LoginDialog';
 import { useContext } from 'react';
 import { DataContext } from '../../context/DataProvider';
+import Profile from './Profile';
 
 const Wrapper = styled(Box)`
     display:flex;
@@ -36,12 +37,12 @@ function CustomButton() {
         setopen(true)
     }
 
-    const { account } = useContext(DataContext)
+    const { account,setAccount } = useContext(DataContext)
 
     return (
         <Wrapper>
             {
-                account ? <Typography>{account}</Typography> :
+                account ? <Profile account={account} setAccount={setAccount}/>:
                     <LoginButton variant='contained' onClick={() => openDialog()}>Login</LoginButton>
             }
             <Typography style={{ marginTop: 3, width: 135 }}>Become a Seller</Typography>

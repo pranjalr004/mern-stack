@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useContext } from "react"
 import {DataContext} from "../../context/DataProvider"
 
-import { authenticateSignup } from "../../service/api"
+import { authenticateSignup,authenticateLogin } from "../../service/api"
 
 const Component=styled(Box)`
     height:70vh;
@@ -60,6 +60,13 @@ const CreateAccount=styled(Typography)`
     font-weight:600;
     cursor:pointer;`
 
+
+const Error=styled(Typography)`
+    font-size:10px;
+    color:#ff6161;
+    line-height:0;
+    margin-top:10px;
+    font-weight:600;`
 const accountInitialValues={
     login:{
         view:'login',
@@ -82,13 +89,22 @@ const signupIntitialValues={
     phone:''
 }
 
+const loginIntitialValues={
+    username:'',
+    password:''
+}
+
 function LoginDialog({open,setopen}) {
     const [account,toggleAccount]=useState(accountInitialValues.login)
     const [signup,setsignup]=useState(signupIntitialValues)
     const {setAccount}=useContext(DataContext)
+    const [login,setLogin]=useState(loginIntitialValues)
+    const [error,seterror]=useState(false)
+
     const handleClose=()=>{
         setopen(false)
-        toggleAccount(accountInitialValues.login)   
+        toggleAccount(accountInitialValues.login) 
+        seterror(false)  
     }
     const ToggleSignup=()=>{
         toggleAccount(accountInitialValues.signup)
@@ -103,7 +119,22 @@ function LoginDialog({open,setopen}) {
        if(!response) return;
        handleClose();
        setAccount(signup.firstname)
+    }
 
+    const onValueChange=(e)=>{
+        setLogin({...login,[e.target.name]:e.target.value})
+    }
+
+    const loginUser=async()=>{
+      let response=await authenticateLogin(login)
+      console.log(response)
+      if(response.status===200){
+        handleClose()
+        setAccount(response.data.data.firstname)
+      }
+      else{
+        seterror(true)
+      }
     }
   return (
     <Dialog open={open} onClose={handleClose} PaperProps={{sx:{maxWidth:'unset'}}}>
@@ -116,12 +147,20 @@ function LoginDialog({open,setopen}) {
             {
                 account.view ==='login' ?
             <Wrapper>
-                <TextField variant="standard" label="Enter Email/Mobile  number"/>
-                <TextField variant="standard" label="Enter Password"/>
+                <TextField variant="standard" label="Enter Email/Mobile  number" onChange={(e)=>onValueChange(e)} name="username"/>
+
+                {error && <Error>Please enter valid username or password</Error>}
+
+                <TextField variant="standard" label="Enter Password" name="password" onChange={(e)=>onValueChange(e)}/>
+
                 <Text>By continuing, you agree to Flipkart's Terms of Use and Privacy Policy</Text>
-                <LoginButton>Login</LoginButton>
+
+                <LoginButton onClick={()=>loginUser()}>Login</LoginButton>
+
                 <Typography style={{textAlign:'center'}}>OR</Typography>
+
                 <RequestOTPButton>Request OTP</RequestOTPButton>
+
                 <CreateAccount onClick={()=>ToggleSignup()}>New to Flipkart? Create an account</CreateAccount>
             </Wrapper>
             :
