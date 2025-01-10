@@ -4,9 +4,14 @@ import "react-multi-carousel/lib/styles.css";
 
 import { styled } from "@mui/material";
 
-const Image = styled('img')`
-    width:100%;
-    height:280;`
+const Image = styled('img')(({theme})=>({
+    width:'100%',
+    height:280,
+    [theme.breakpoints.down('sm')]:{
+        objectFit:'cover',
+        height:180
+    }
+}))
 
 const responsive = {
     desktop: {
@@ -25,8 +30,10 @@ const responsive = {
 
 function Banner() {
     return (
-        <Carousel responsive={responsive}                   dotListClass="custom-dot-list-style"
-        itemClass="carousel-item-padding-40-px" containerClass="carousel-container"
+        <Carousel responsive={responsive}            
+        dotListClass="custom-dot-list-style"
+        itemClass="carousel-item-padding-40-px" 
+        containerClass="carousel-container"
         swipeable={false}
         draggable={false}
         infinite={true}
