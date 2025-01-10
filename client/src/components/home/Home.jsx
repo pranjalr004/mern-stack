@@ -14,13 +14,13 @@ const Component=styled(Box)`
     background:#F2F2F2;`
 
 const Home=()=>{
-
-   const {products}= useSelector(state=>state.getProducts)
+    const {products}=useSelector(state=>state.getProducts)
     const dispatch=useDispatch()
 
     useEffect(()=>{
-       dispatch(getProducts())
+        dispatch(getProducts())
     },[dispatch])
+
     return (
         <>
             <Navbar/>
