@@ -48,8 +48,8 @@ const ActionItem=({product})=>{
         navigate('/cart')
     }
 
-const BuyNow=()=>{
-    let response=payUsingPaytm({amount:500,email:'pranjalr714@gmail.com'})
+const BuyNow=async()=>{
+    let response=await payUsingPaytm({amount:500,email:'pranjalr714@gmail.com'})
     let information={
         action:'https://securegw-stage.paytm.in/order/process',
         params:response
