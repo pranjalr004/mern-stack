@@ -23,3 +23,12 @@ Connection(USERNAME,PASSWORD)
 app.listen(PORT,()=>console.log(`Server is running successfully on PORT ${PORT}`))
 
 DefaultData()
+
+export let paytmMerchantKey=process.env.PAYTM_MERCHANT_KEY;
+
+export let paytmParams={};
+paytmParams['MID']=process.env.PAYTM_MID;
+paytmParams['WEBSITE']=process.env.PAYTM_WEBSITE;
+paytmParams['CHANNEL_ID']=process.env.PAYTM_CHANNEL_ID;
+paytmParams['INDUSTRY']=process.env.PAYTM_INDUSTRY_TYPE;
+paytmParams['ORDER_ID']
